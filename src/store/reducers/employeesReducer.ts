@@ -41,7 +41,8 @@ export const fetchEmployees = createAsyncThunk("fetchEmployees", async (_, thunk
       return thunkApi.rejectWithValue
    }
 })
-
+console.log("add employee");
+   
 const employeesSlice = createSlice({
    name: "employees",
    initialState,
