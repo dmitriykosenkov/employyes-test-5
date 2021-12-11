@@ -1,0 +1,14 @@
+.wrapper {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   color: #1d3124;
+}
+.title{
+}
+.char {
+   font-size: 1.4em;
+   font-weight: 500;
+}
+.emplByChar {
+   margin: 0 5px;
+}

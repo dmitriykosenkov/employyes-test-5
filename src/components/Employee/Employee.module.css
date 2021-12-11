@@ -1,0 +1,13 @@
+.employeeWrapper {
+   margin-bottom: 15px;
+   background-color: #1d3124;
+   color: #bacec1;
+   padding-left: 10px;
+   border-radius: 10px;
+}
+.employeeName {
+
+}
+.active {
+   color: #e59560;
+}

@@ -1,0 +1,10 @@
+.wrapper {
+   background-color: #1d3124;
+}
+.container {
+   max-width: 1000px;
+   margin: 0 auto;
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   background-color: #bacec1;
+}
