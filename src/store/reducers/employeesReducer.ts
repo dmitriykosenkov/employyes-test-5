@@ -16,6 +16,7 @@ export interface employeeType {
    firstName: string,
    lastName: string,
    dob: string
+   isActive: boolean | false
 }
 
 interface monthesType {
