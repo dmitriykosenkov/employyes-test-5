@@ -1,38 +1,7 @@
+import { createMonthTitle } from '../../utils/utils';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export interface employeeType {
-   id: string,
-   firstName: string,
-   lastName: string,
-   dob: string
-}
-// interface EmployeesActive {
-//    january?: employeeType[]
-//    february?: employeeType[]
-//    march?: employeeType[]
-//    april?: employeeType[]
-//    may?: employeeType[]
-//    june?: employeeType[]
-//    july?: employeeType[]
-//    august?: employeeType[]
-//    september?: employeeType[]
-//    october?: employeeType[]
-//    november?: employeeType[]
-//    december?: employeeType[]
-// }
-interface initialStateType {
-   employees: employeeType[]
-   employeesActive: employeeType[]
-   status: null | string
-   error: null | string
-}
-const initialState: initialStateType = {
-   employees: [],
-   employeesActive: [],
-   status: null,
-   error: null,
-}
 export const fetchEmployees = createAsyncThunk("fetchEmployees", async (_, thunkApi) => {
    try {
       const response = await axios.get('https://yalantis-react-school-api.yalantis.com/api/task0/users')
@@ -41,17 +10,56 @@ export const fetchEmployees = createAsyncThunk("fetchEmployees", async (_, thunk
       return thunkApi.rejectWithValue
    }
 })
-console.log("add employee");
-   
+
+export interface employeeType {
+   id: string,
+   firstName: string,
+   lastName: string,
+   dob: string
+}
+
+interface monthesType {
+   [key: string]: employeeType[]
+}
+
+interface initialStateType {
+   employees: employeeType[]
+   employeesActive: monthesType
+   status: null | string
+   error: null | string
+}
+
+const initialState: initialStateType = {
+   employees: [],
+   employeesActive: {
+      "january": [],
+      "february": [],
+      "march": [],
+      "april": [],
+      "may": [],
+      "june": [],
+      "july": [],
+      "august": [],
+      "september": [],
+      "october": [],
+      "november": [],
+      "december": [],
+   },
+   status: null,
+   error: null,
+}
+
 const employeesSlice = createSlice({
    name: "employees",
    initialState,
    reducers: {
       deleteActiveEmployees: (state, action: PayloadAction<employeeType>) => {
-         state.employeesActive = state.employeesActive.filter(item => item.id !== action.payload.id)
+         const month = createMonthTitle(action.payload.dob).toLowerCase()
+         state.employeesActive[month] = state.employeesActive[month].filter(item => item.id !== action.payload.id)
       },
       addActiveEmployees: (state, action: PayloadAction<employeeType>) => {
-         state.employeesActive.push(action.payload)
+         const month: string = createMonthTitle(action.payload.dob).toLowerCase()
+         state.employeesActive[month].push(action.payload)
       }
    }, extraReducers: {
       [fetchEmployees.pending.type]: (state) => {

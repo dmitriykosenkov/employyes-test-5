@@ -40,3 +40,10 @@ export const filterEmployees = (emp: employeeType[], letter: string) => {
     });
    return `${dob.getDate()} ${month}, ${dob.getFullYear()} year`
 }
+ export const createMonthTitle = (date: string) => {
+   const dob = new Date(date)
+   const month = dob.toLocaleString('en', {       
+      month: 'long'       
+    });
+   return month
+}

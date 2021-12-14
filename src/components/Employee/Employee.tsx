@@ -30,7 +30,7 @@ const Employee: FC<PropsType> = ({ employee }) => {
   };
   return (
     <div className={s.employeeWrapper}>
-      <div className={value === "not active" ? s.employeeName : s.active}>
+      <div className={value === "not active" ? s.employeeName : `${s.employeeName} ${s.active}`}>
         {lastName} {firstName}
       </div>
       <RadioBtn id={id} value={value} changeValue={changeValue} />
