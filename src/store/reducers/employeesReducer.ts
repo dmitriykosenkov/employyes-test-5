@@ -10,13 +10,14 @@ export const fetchEmployees = createAsyncThunk("fetchEmployees", async (_, thunk
       return thunkApi.rejectWithValue
    }
 })
-
+export interface employeeType {
+   isActive: boolean | false 
+}
 export interface employeeType {
    id: string,
    firstName: string,
    lastName: string,
-   dob: string
-   isActive: boolean | false
+   dob: string,
 }
 
 interface monthesType {
@@ -55,10 +56,12 @@ const employeesSlice = createSlice({
    initialState,
    reducers: {
       deleteActiveEmployees: (state, action: PayloadAction<employeeType>) => {
+         state.employees = state.employees.map(item => item.id === action.payload.id ? {...item, isActive: action.payload.isActive} : item)
          const month = createMonthTitle(action.payload.dob).toLowerCase()
          state.employeesActive[month] = state.employeesActive[month].filter(item => item.id !== action.payload.id)
       },
       addActiveEmployees: (state, action: PayloadAction<employeeType>) => {
+         state.employees = state.employees.map(item => item.id === action.payload.id ? {...item, isActive: action.payload.isActive} : item)
          const month: string = createMonthTitle(action.payload.dob).toLowerCase()
          state.employeesActive[month].push(action.payload)
       }
@@ -68,7 +71,7 @@ const employeesSlice = createSlice({
       },
       [fetchEmployees.fulfilled.type]: (state, action: PayloadAction<employeeType[]>) => {
          state.status = "resolved"
-         state.employees = action.payload
+         state.employees = action.payload.map(item => ({...item, isActive: false}))
          state.error = null
       },
       [fetchEmployees.rejected.type]: (state, action: PayloadAction<string>) => {

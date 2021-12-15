@@ -5,6 +5,7 @@ import {
   deleteActiveEmployees,
   employeeType,
 } from "../../store/reducers/employeesReducer";
+import { createSelectedEmployee, deleteSelectedEmployee } from "../../utils/utils";
 import s from "./Employee.module.css";
 import RadioBtn from "./RadioBtn/RadioBtn";
 
@@ -13,27 +14,27 @@ type PropsType = {
 };
 
 const Employee: FC<PropsType> = ({ employee }) => {
-  const { firstName, lastName, id } = employee;
+  const { firstName, lastName, id, isActive } = employee;
   const [value, setValue] = useState("not active");
   const dispatch = useAppDispatch();
-  
+
   const changeValue = (e: any) => {
     setValue(e.target.value);
     switch (e.target.value) {
        case "not active":
-          dispatch(deleteActiveEmployees(employee))
+          dispatch(deleteActiveEmployees(deleteSelectedEmployee(employee)))
           break;
        case "active":
-          dispatch(addActiveEmployees(employee));
+          dispatch(addActiveEmployees(createSelectedEmployee(employee)));
           break;
     }
   };
   return (
     <div className={s.employeeWrapper}>
-      <div className={value === "not active" ? s.employeeName : `${s.employeeName} ${s.active}`}>
+      <div className={!isActive ? s.employeeName : `${s.employeeName} ${s.active}`}>
         {lastName} {firstName}
       </div>
-      <RadioBtn id={id} value={value} changeValue={changeValue} />
+      <RadioBtn id={id} value={value} changeValue={changeValue} isActive={isActive} />
     </div>
   );
 };

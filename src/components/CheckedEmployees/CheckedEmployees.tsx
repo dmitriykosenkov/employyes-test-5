@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { deleteActiveEmployees, employeeType } from "../../store/reducers/employeesReducer";
-import { createDOB } from "../../utils/utils";
+import { createDOB, deleteSelectedEmployee } from "../../utils/utils";
 import s from "./CheckedEmployees.module.css";
 
 const CheckedEmployees: FC = () => {
@@ -17,7 +17,7 @@ const CheckedEmployees: FC = () => {
             {value.length !== 0 ? <div className={s.month}>{key}</div> : null}
             {value.map((item: employeeType) => (
               <div className={s.employee}>
-                <span className={s.deleteBtn} onClick={() => dispatch(deleteActiveEmployees(item))}></span>{item.lastName} - {createDOB(item.dob)} 
+                <span className={s.deleteBtn} onClick={() => dispatch(deleteActiveEmployees(deleteSelectedEmployee(item)))}></span>{item.lastName} - {createDOB(item.dob)} 
               </div>
             ))}
           </div>

@@ -41,9 +41,16 @@ export const filterEmployees = (emp: employeeType[], letter: string) => {
    return `${dob.getDate()} ${month}, ${dob.getFullYear()} year`
 }
  export const createMonthTitle = (date: string) => {
-   const dob = new Date(date)
-   const month = dob.toLocaleString('en', {       
+   const dob = new Date(date).toLocaleString('en', {       
       month: 'long'       
     });
-   return month
+   return dob
+}
+export const createSelectedEmployee = (data: employeeType) => {
+   // return data
+   return {...data, isActive: true}
+}
+export const deleteSelectedEmployee = (data: employeeType) => {
+   // return data
+   return {...data, isActive: false}
 }
